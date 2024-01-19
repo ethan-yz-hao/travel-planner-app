@@ -1,22 +1,34 @@
-var path = require('path')
-const express = require('express')
-const mockAPIResponse = require('./mockAPI.js')
+var path = require('path');
+const express = require('express');
+const postMeaningCloud = require('./postMeaningCloud.js');
 
-const app = express()
+const dotenv = require('dotenv');
+dotenv.config();
 
-app.use(express.static('dist'))
+const app = express();
 
-console.log(__dirname)
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-app.get('/', function (req, res) {
-    res.sendFile('dist/index.html');
-})
+const cors = require('cors');
+app.use(cors());
+
+app.use(express.static('dist'));
 
 // designates what port the app will listen to for incoming requests
 app.listen(8080, function () {
-    console.log('Example app listening on port 8080!')
-})
+    console.log('Example app listening on port 8080!');
+});
 
-app.get('/test', function (req, res) {
-    res.send(mockAPIResponse)
-})
+app.get('/', function (req, res) {
+    res.sendFile('dist/index.html');
+});
+
+app.post('/eval', (req, res) => {
+    postMeaningCloud(process.env.API_KEY, req.body.urlText)
+        .then(response => res.send(response))
+        .catch(error => {
+            console.error(error);
+        });
+});

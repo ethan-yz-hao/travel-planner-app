@@ -1,5 +1,4 @@
-function checkForName(inputText) {
-    console.log("::: Running checkForName :::", inputText);
+function checkForURL(inputText) {
     let names = [
         "Picard",
         "Janeway",
@@ -13,4 +12,4 @@ function checkForName(inputText) {
     }
 }
 
-export { checkForName }
+export { checkForURL }
