@@ -17,9 +17,9 @@ function handleSubmit(event) {
         .then(res => res.json())
         .then(function (res) {
             console.log(res)
-            document.getElementById('polarity').innerText = res.score_tag;
+            document.getElementById('polarity').innerText = res.polarity;
             document.getElementById('subjectivity').innerText = res.subjectivity;
-            document.getElementById('snippet').innerText = res.sentence_list[0].text;
+            document.getElementById('snippet').innerText = res.snippet;
         })
         .catch(error => console.log('error', error));
 }
