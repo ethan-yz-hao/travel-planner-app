@@ -1,38 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Test</title>
-    </head>
-    <body>
-        <header>
-            <div class="">
-                Logo
-            </div>
-            <div class="">
-                navigation
-            </div>
-        </header>
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+</head>
+<body>
+<header>
+    <div class="">
+        Logo
+    </div>
+    <div class="">
+        navigation
+    </div>
+</header>
 
-        <main>
-            <section>
-                <form class="" onsubmit="Client.handleSubmit(event)">
-                    <input id="url" type="text" name="input" value="" placeholder="URL">
-                    <input type="submit" value="Submit">
-                </form>
-            </section>
+<main>
+    <section>
+        <form class="" onsubmit="Client.handleSubmit(event)">
+            <label for="url">URL</label>
+            <input id="url" type="text" name="input" value="" placeholder="URL">
+            <input type="submit" value="Submit">
+        </form>
+    </section>
 
-            <section>
-                <strong>Form Results:</strong>
-                <div id="polarity"></div>
-                <div id="subjectivity"></div>
-                <div id="snippet"></div>
-            </section>
-        </main>
+    <section>
+        <strong>Form Results:</strong>
+        <div>Polarity:
+            <div id="polarity"></div>
+        </div>
+        <div>
+            Subjectivity:
+            <div id="subjectivity"></div>
+        </div>
+        <div>
+            Text snippet:
+            <div id="snippet"></div>
+        </div>
+    </section>
+</main>
 
-        <footer>
-            <p>This is a footer</p>
-        </footer>
+<footer>
+    <p>This is a footer</p>
+</footer>
 
-    </body>
+</body>
 </html>
