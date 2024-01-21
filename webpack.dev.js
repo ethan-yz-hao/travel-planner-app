@@ -22,7 +22,23 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [ 'style-loader', 'css-loader', 'sass-loader' ]
-            }
+            },
+            {
+                test: /\.(png|jpg|jpeg|gif|svg)$/,
+                type: 'asset',
+                generator: {
+                    filename: 'images/[name][ext][query]',
+                },
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 8192,
+                    },
+                },
+            },
+            {
+                test: /\.html$/,
+                use: ["html-loader"],
+            },
         ]
     },
     plugins: [
