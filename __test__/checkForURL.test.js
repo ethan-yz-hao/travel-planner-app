@@ -1,4 +1,4 @@
-import { isURL } from '../../../src/client/js/checkForURL';
+import { isURL } from '../src/client/js/checkForURL';
 describe('isURL function', () => {
     test('should return true for a valid URL', () => {
         const validURL = 'https://www.example.com';

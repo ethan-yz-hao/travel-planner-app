@@ -1,6 +1,6 @@
-import { handleSubmit } from '../../../src/client/js/formHandler';
+import { handleSubmit } from '../src/client/js/formHandler';
 
-jest.mock('../../../src/client/js/checkForURL', () => {
+jest.mock('../src/client/js/checkForURL', () => {
     return {
         isURL: jest.fn(() => true),
     };
