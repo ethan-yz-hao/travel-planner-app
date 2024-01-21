@@ -1,4 +1,8 @@
 header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
     background-color: #333;
     color: #fff;
     display:flex;
@@ -7,7 +11,7 @@ header {
     padding: 10px 20px;
 }
 
-.icon img,#spacer{
+.icon img, #spacer{
     width: 30px;
 }
 
