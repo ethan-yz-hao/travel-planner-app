@@ -1,4 +1,4 @@
-import { handleSubmit } from '../src/client/js/formHandler';
+import {handleSubmit} from '../src/client/js/formHandler';
 
 jest.mock('../src/client/js/checkForURL', () => {
     return {
@@ -43,7 +43,7 @@ describe('handleSubmit function', () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ urlText: 'https://example.com' }),
+            body: JSON.stringify({urlText: 'https://example.com'}),
         });
 
         await new Promise(resolve => setTimeout(resolve, 0));
