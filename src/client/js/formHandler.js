@@ -5,7 +5,6 @@ function handleSubmit(event) {
 
     // check what text was put into the form field
     let urlText = document.getElementById('url').value;
-    console.log(isURL(urlText));
     if (!isURL(urlText)) {
         alert('An error occurred during HTML parsing. The input is not valid HTML.');
     } else {

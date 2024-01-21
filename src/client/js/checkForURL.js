@@ -1,4 +1,8 @@
 function isURL(inputText) {
+    // Check if the inputText is empty or blank
+    if (!inputText || /^\s*$/.test(inputText)) {
+        return false;
+    }
     const pattern = new RegExp(
         '^([a-zA-Z]+:\\/\\/)?' + // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
