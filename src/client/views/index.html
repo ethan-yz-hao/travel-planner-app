@@ -2,45 +2,50 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <title>Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Add this line -->
+    <title>>News Article Evaluator</title>
 </head>
 <body>
+
 <header>
-    <div class="">
-        Logo
+    <div class="icon">
+        <img src="../images/news.png" alt="news icon">
     </div>
-    <div class="">
-        navigation
+    <div class="title">
+        <h1>News Article Evaluator</h1>
     </div>
+    <div id="spacer"></div>
 </header>
 
 <main>
-    <section>
-        <form class="" onsubmit="Client.handleSubmit(event)">
-            <label for="url">URL</label>
-            <input id="url" type="text" name="input" value="" placeholder="URL">
-            <input type="submit" value="Submit">
-        </form>
-    </section>
+    <div class="container">
+        <section>
+            <form class="" onsubmit="Client.handleSubmit(event)">
+                <label for="url">URL</label>
+                <input id="url" type="text" name="input" value="" placeholder="URL">
+                <input type="submit" value="Submit" class="submit-button">
+            </form>
+        </section>
 
-    <section>
-        <strong>Form Results:</strong>
-        <div>Polarity:
-            <div id="polarity"></div>
-        </div>
-        <div>
-            Subjectivity:
-            <div id="subjectivity"></div>
-        </div>
-        <div>
-            Text snippet:
-            <div id="snippet"></div>
-        </div>
-    </section>
+        <section>
+            <div class="result-container">
+                <strong>Polarity:</strong>
+                <div id="polarity"></div>
+            </div>
+            <div class="result-container">
+                <strong>Subjectivity:</strong>
+                <div id="subjectivity"></div>
+            </div>
+            <div class="result-container">
+                <strong>Text snippet:</strong>
+                <div id="snippet"></div>
+            </div>
+        </section>
+    </div>
 </main>
 
 <footer>
-    <p>This is a footer</p>
+    <p>&copy; 2024 News Article Evaluator. All rights reserved.</p>
 </footer>
 
 </body>
