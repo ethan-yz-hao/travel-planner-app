@@ -7,7 +7,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
-    entry: './src/client/index.js',
+    entry: './src/client/server.js',
     output: {
         libraryTarget: 'var',
         library: 'Client'
@@ -31,7 +31,7 @@ module.exports = {
                 test: /\.(png|jpg|jpeg|gif|svg)$/,
                 type: 'asset',
                 generator: {
-                    filename: 'images/[name][ext][query]',
+                    filename: 'media/[name][ext][query]',
                 },
                 parser: {
                     dataUrlCondition: {

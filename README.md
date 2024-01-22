@@ -1,4 +1,4 @@
-# News Article Evaluator Project
+# Travel Planner Project
 
 ---
 ## Description
