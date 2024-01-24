@@ -20,12 +20,22 @@
 <main>
     <div class="container">
         <section>
-            <form class="" onsubmit="Client.handleSubmit(event)">
-                <label for="url">URL</label>
-                <input id="url" type="text" name="input" value="" placeholder="URL">
+            <form onsubmit="Client.handleSubmit(event)">
+                <label for="destination">Destination:</label>
+                <input type="text" id="destination" class="trip-destination" placeholder="The place you want to go:">
+                <label for="start">Departing date:</label>
+                <input type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" />
                 <input type="submit" value="Submit" class="submit-button">
             </form>
         </section>
+
+<!--        <section>-->
+<!--            <form class="" onsubmit="Client.handleSubmit(event)">-->
+<!--                <label for="url">URL</label>-->
+<!--                <input id="url" type="text" name="input" value="" placeholder="URL">-->
+<!--                <input type="submit" value="Submit" class="submit-button">-->
+<!--            </form>-->
+<!--        </section>-->
 
         <section>
             <div class="result-container">
@@ -47,14 +57,6 @@
 <footer>
     <p>&copy; 2024 News Article Evaluator. All rights reserved.</p>
 </footer>
-
-<script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js');
-        });
-    }
-</script>
 
 </body>
 </html>
