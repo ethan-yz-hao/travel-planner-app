@@ -1,15 +1,19 @@
 function initializeHTML() {
-    const formatDate = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const localDate = `${year}-${month}-${day}`;
-        return localDate;
-    };
-    const startDateElement = document.getElementById('start')
-    const startDate = formatDate(new Date());
-    startDateElement.value = startDate;
-    startDateElement.setAttribute('min', startDate);
+    // const formatDate = (date) => {
+    //     const year = date.getFullYear();
+    //     const month = String(date.getMonth() + 1).padStart(2, '0');
+    //     const day = String(date.getDate()).padStart(2, '0');
+    //     const localDate = `${year}-${month}-${day}`;
+    //     return localDate;
+    // };
+
+    const startDateTimeElement = document.getElementById('start')
+    const nowUTC = new Date();
+    const timeZoneOffset = nowUTC.getTimezoneOffset() * 60000;
+    const localISOTime = (new Date(nowUTC - timeZoneOffset)).toISOString().slice(0,16);
+    startDateTimeElement.value = localISOTime;
+    startDateTimeElement.setAttribute('min', localISOTime);
+    console.log(localISOTime);
 
     // if ('serviceWorker' in navigator) {
     //     window.addEventListener('load', () => {
