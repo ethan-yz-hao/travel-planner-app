@@ -42,7 +42,6 @@ function handleSubmit(event) {
     destinationElement.innerText = destination;
     fragment.appendChild(destinationElement);
     // start Date Time
-    const startDateElement = document.createElement('p');
     const options = {
         year: 'numeric',
         month: '2-digit',
@@ -51,8 +50,17 @@ function handleSubmit(event) {
         minute: '2-digit',
         hour12: true
     };
+    const startDateElement = document.createElement('p');
     startDateElement.innerText = startDateTime.toLocaleString('en-US', options);
     fragment.appendChild(startDateElement);
+    // count down
+    const nowUTC = new Date();
+    const diffTime = Math.abs(startDateTime.getTime() - nowUTC.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDaysElement = document.createElement('p');
+    diffDaysElement.innerText = diffDays.toString();
+    fragment.appendChild(diffDaysElement);
+
 
     const card = document.createElement('div');
     card.appendChild(fragment);
