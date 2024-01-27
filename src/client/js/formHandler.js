@@ -26,20 +26,32 @@ function handleSubmit(event) {
     // }
 
     // get data from dom
+    // destination
     let destination = document.getElementById('destination').value;
-    let startDate = document.getElementById('start').value;
-    const tripData = {destination, startDate};
+    // start Date Time
+    const startDateTime = new Date(document.getElementById('start').value);
 
     // store the data
+    const tripData = {destination, startDateTime};
     listTripData.push(tripData);
 
     // edit dom
     const fragment = document.createDocumentFragment();
+    // destination
     const destinationElement = document.createElement('p');
     destinationElement.innerText = destination;
     fragment.appendChild(destinationElement);
+    // start Date Time
     const startDateElement = document.createElement('p');
-    startDateElement.innerText = startDate;
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    };
+    startDateElement.innerText = startDateTime.toLocaleString('en-US', options);
     fragment.appendChild(startDateElement);
 
     const card = document.createElement('div');
