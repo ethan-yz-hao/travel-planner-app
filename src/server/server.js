@@ -1,6 +1,6 @@
 var path = require('path');
 const express = require('express');
-const postMeaningCloud = require('./postMeaningCloud.js');
+const postGeonames = require('./postGeonames.js');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -25,9 +25,16 @@ app.get('/', function (req, res) {
     res.sendFile('dist/index.html');
 });
 
-app.post('/eval', (req, res) => {
-    postMeaningCloud(process.env.API_KEY, req.body.urlText)
-        .then(response => res.send(response))
+app.post('/weather', (req, res) => {
+    // postMeaningCloud(process.env.API_KEY, req.body.urlText)
+    //     .then(response => res.send(response))
+    //     .catch(error => {
+    //         console.error(error);
+    //     });
+    postGeonames(process.env.API_KEY_GEONAMES, req.body.destination)
+        .then(response => {
+            console.log(response);
+        })
         .catch(error => {
             console.error(error);
         });

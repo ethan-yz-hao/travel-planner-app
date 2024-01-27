@@ -3,7 +3,7 @@ async function postGeonames(apiKey, location) {
     try {
         const response = await fetch(url);
         const resObjs = await response.json();
-        const resObj = resObjs[0];
+        const resObj = resObjs.geonames[0];
         return {lng: resObj.lng, lat: resObj.lat, toponymName: resObj.toponymName, countryName: resObj.countryName};
     } catch (error) {
         console.log('error', error);

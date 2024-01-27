@@ -31,6 +31,16 @@ function handleSubmit(event) {
     // start Date Time
     const startDateTime = new Date(document.getElementById('start').value);
 
+    // post destination and get weather
+    fetch('/weather', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({destination}),
+            })
+
     // store the data
     const tripData = {destination, startDateTime};
     listTripData.push(tripData);
@@ -60,7 +70,6 @@ function handleSubmit(event) {
     const diffDaysElement = document.createElement('p');
     diffDaysElement.innerText = diffDays.toString();
     fragment.appendChild(diffDaysElement);
-
 
     const card = document.createElement('div');
     card.appendChild(fragment);
