@@ -1,4 +1,4 @@
-import {isURL} from "./checkForURL";
+import { listTripData } from './globalVars.js';
 
 function handleSubmit(event) {
     event.preventDefault()
@@ -24,11 +24,29 @@ function handleSubmit(event) {
     //         })
     //         .catch(error => console.log('error', error));
     // }
+
+    // get data from dom
     let destination = document.getElementById('destination').value;
     let startDate = document.getElementById('start').value;
-    console.log(startDate);
-    console.log(typeof startDate);
-    console.log(destination);
+    const tripData = {destination, startDate};
+
+    // store the data
+    listTripData.push(tripData);
+
+    // edit dom
+    const fragment = document.createDocumentFragment();
+    const destinationElement = document.createElement('p');
+    destinationElement.innerText = destination;
+    fragment.appendChild(destinationElement);
+    const startDateElement = document.createElement('p');
+    startDateElement.innerText = startDate;
+    fragment.appendChild(startDateElement);
+
+    const card = document.createElement('div');
+    card.appendChild(fragment);
+    const cardList = document.getElementById('card-list');
+    cardList.appendChild(card);
+
 }
 
 export {handleSubmit}
