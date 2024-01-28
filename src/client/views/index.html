@@ -8,18 +8,14 @@
 <body>
 
 <header>
-    <div class="icon">
-        <img src="../media/airplane.png" alt="news icon">
-    </div>
-    <div class="title">
-        <h1>Travel Planner</h1>
-    </div>
-    <div id="spacer"></div>
+    <img src="../media/airplane.png" alt="news icon">
+    <h1 class="title">Travel Planner</h1>
+    <button id="add-trip-button">Add Trip</button>
 </header>
 
 <main>
     <div class="container">
-        <section>
+        <section id="trip-form-container" class="dropdown-form">
             <form onsubmit="Client.handleSubmit(event)">
                 <label for="destination">Destination:</label>
                 <input type="text" id="destination" class="trip-destination" placeholder="The place you want to go:">

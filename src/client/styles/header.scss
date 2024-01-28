@@ -11,13 +11,33 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-}
 
-.icon img, #spacer {
-    width: 30px;
-}
+    img {
+        width: 30px;
+        margin-right: 50px;
+    }
 
-.title {
-    font-size: 1.5em;
-    text-align: center;
+    .title {
+        font-size: 1.5em;
+        text-align: center;
+    }
+
+    button {
+        width: 80px;
+        height: 30px;
+        cursor: pointer;
+        background-color: $color-primary;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: darken($color-primary, 10%);
+        }
+
+        &.active {
+            background-color: darken($color-primary, 20%);
+        }
+    }
 }
