@@ -1,6 +1,7 @@
 var path = require('path');
 const express = require('express');
 const postGeonames = require('./postGeonames.js');
+const postWeatherBit = require('./postWeatherBit');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -25,17 +26,13 @@ app.get('/', function (req, res) {
     res.sendFile('dist/index.html');
 });
 
-app.post('/weather', (req, res) => {
-    // postMeaningCloud(process.env.API_KEY, req.body.urlText)
-    //     .then(response => res.send(response))
-    //     .catch(error => {
-    //         console.error(error);
-    //     });
-    postGeonames(process.env.API_KEY_GEONAMES, req.body.destination)
-        .then(response => {
-            console.log(response);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+app.post('/weather', async (req, res) => {
+    try {
+        const geoData = await postGeonames(process.env.API_KEY_GEONAMES, req.body.destination);
+        const weatherData = await postWeatherBit(process.env.API_KEY_WEATHERBIT, geoData.lng, geoData.lat, req.body.diffDays);
+        const response = {geoData, weatherData};
+        res.send(response);
+    } catch (error) {
+        console.error(error);
+    }
 });
