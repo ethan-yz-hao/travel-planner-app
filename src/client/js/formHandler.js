@@ -17,29 +17,10 @@ async function handleSubmit(event) {
     const diffTime = Math.abs(startDateTime.getTime() - nowUTC.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    // edit dom
+    // init dom element
     const fragment = document.createDocumentFragment();
-    // destination
-    const destinationElement = document.createElement('p');
-    destinationElement.innerText = destination;
-    fragment.appendChild(destinationElement);
-    // start Date Time
-    const options = {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-    };
-    const startDateElement = document.createElement('p');
-    startDateElement.innerText = startDateTime.toLocaleString('en-US', options);
-    fragment.appendChild(startDateElement);
-    // count down
-    const diffDaysElement = document.createElement('p');
-    diffDaysElement.innerText = diffDays.toString();
-    fragment.appendChild(diffDaysElement);
 
+    // destination
     // get geo
     const resGeo = await fetch('/geo', {
         method: 'POST',
@@ -52,13 +33,31 @@ async function handleSubmit(event) {
     const geoData = await resGeo.json();
     tripData.geoData = geoData;
     const geoElement = document.createElement('p');
-    geoElement.innerText = `${destination}, ${geoData.countryName}`;
+    geoElement.innerText = `Trip to ${destination}, ${geoData.countryName}`;
     fragment.appendChild(geoElement);
+
+    // start Date Time
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    };
+    const startDateElement = document.createElement('p');
+    startDateElement.innerText = `Departing: ${startDateTime.toLocaleString('en-US', options)}`;
+    fragment.appendChild(startDateElement);
+
+    // count down
+    const diffDaysElement = document.createElement('p');
+    diffDaysElement.innerText = `${destination}, ${geoData.countryName} is ${diffDays.toString()} day(s) away`;
+    fragment.appendChild(diffDaysElement);
 
     // get weather
     const weatherElement = document.createElement('p');
     if (diffDays > 16) {
-        weatherElement.innerText = 'No accurate weather data available';
+        weatherElement.innerHTML = '<p>Weather of the day: No accurate weather data available}<\p>';
         fragment.appendChild(weatherElement);
     } else {
         const resWeather = await fetch('/weather', {
@@ -71,13 +70,14 @@ async function handleSubmit(event) {
         });
         const weatherData = await resWeather.json();
         tripData.weatherData = weatherData;
-        weatherElement.innerHTML = `<p>Weather: ${weatherData.description}<\p><p>Temperature - High: ${weatherData.high}<span>&#8451;</span> Low: ${weatherData.low}<span>&#8451;</span></p>`;
+        weatherElement.innerHTML = `<p>Weather of the day: ${weatherData.description}<\p><p>Temperature - High: ${weatherData.high}<span>&#8451;</span> Low: ${weatherData.low}<span>&#8451;</span></p>`;
         fragment.appendChild(weatherElement);
     }
 
     // store the data
     listTripData.push(tripData);
 
+    // edit dom
     const card = document.createElement('div');
     card.appendChild(fragment);
     const cardList = document.getElementById('card-list');
