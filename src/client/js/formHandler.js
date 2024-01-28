@@ -3,12 +3,14 @@ import {listTripData} from './globalVars.js';
 async function handleSubmit(event) {
     event.preventDefault()
 
+    // create tripData for later storage
+    const tripData = {};
+
     // get data from dom
     let destination = document.getElementById('destination').value;
+    tripData.destination = destination;
     const startDateTime = new Date(document.getElementById('start').value);
-
-    // create tripData for later storage
-    const tripData = {destination, startDateTime};
+    tripData.startDateTime = startDateTime
 
     // calculate count down
     const nowUTC = new Date();
@@ -38,28 +40,39 @@ async function handleSubmit(event) {
     diffDaysElement.innerText = diffDays.toString();
     fragment.appendChild(diffDaysElement);
 
-    // get geo and weather
+    // get geo
+    const resGeo = await fetch('/geo', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({destination}),
+    });
+    const geoData = await resGeo.json();
+    tripData.geoData = geoData;
+    const geoElement = document.createElement('p');
+    geoElement.innerText = `${destination}, ${geoData.countryName}`;
+    fragment.appendChild(geoElement);
+
+    // get weather
     const weatherElement = document.createElement('p');
     if (diffDays > 16) {
         weatherElement.innerText = 'No accurate weather data available';
         fragment.appendChild(weatherElement);
     } else {
-        await fetch('/weather', {
+        const resWeather = await fetch('/weather', {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({destination, diffDays}),
-        })
-            .then(res => res.json())
-            .then(response => {
-                console.log(response);
-                tripData.weatherData = response.weatherData;
-                tripData.geoData = response.geoData;
-                weatherElement.innerText = `Weather: ${response.weatherData}`;
-                fragment.appendChild(weatherElement);
-            });
+            body: JSON.stringify({lng: geoData.lng, lat: geoData.lat, diffDays}),
+        });
+        const weatherData = await resWeather.json();
+        tripData.weatherData = weatherData;
+        weatherElement.innerHTML = `<p>Weather: ${weatherData.description}<\p><p>Temperature - High: ${weatherData.high}<span>&#8451;</span> Low: ${weatherData.low}<span>&#8451;</span></p>`;
+        fragment.appendChild(weatherElement);
     }
 
     // store the data

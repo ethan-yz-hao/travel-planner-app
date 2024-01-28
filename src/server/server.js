@@ -26,13 +26,18 @@ app.get('/', function (req, res) {
     res.sendFile('dist/index.html');
 });
 
-app.post('/weather', async (req, res) => {
-    try {
-        const geoData = await postGeonames(process.env.API_KEY_GEONAMES, req.body.destination);
-        const weatherData = await postWeatherBit(process.env.API_KEY_WEATHERBIT, geoData.lng, geoData.lat, req.body.diffDays);
-        const response = {geoData, weatherData};
-        res.send(response);
-    } catch (error) {
-        console.error(error);
-    }
+app.post('/geo', (req, res) => {
+    postGeonames(process.env.API_KEY_GEONAMES, req.body.destination)
+        .then(response => res.send(response))
+        .catch(error => {
+            console.error(error);
+        });
+});
+
+app.post('/weather', (req, res) => {
+    postWeatherBit(process.env.API_KEY_WEATHERBIT, req.body.lng, req.body.lat, req.body.diffDays)
+        .then(response => res.send(response))
+        .catch(error => {
+            console.error(error);
+        });
 });
