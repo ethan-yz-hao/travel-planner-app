@@ -1,6 +1,7 @@
 @import 'variables';
 
 form {
+    margin: 20px;
     border: 1px solid $color-border;
     border-radius: 5px;
     padding: 20px;
@@ -31,6 +32,12 @@ form {
         &:hover {
             background-color: darken($color-primary, 10%);
         }
+    }
+}
+
+@media (max-width: 768px) {
+    form {
+        margin: 20px 10px;
     }
 }
 

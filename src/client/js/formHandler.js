@@ -18,7 +18,7 @@ async function handleSubmit(event) {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     // init dom element
-    const fragment = document.createDocumentFragment();
+    const cardFragment = document.createDocumentFragment();
 
     // image
     const resImg = await fetch('/img', {
@@ -37,8 +37,10 @@ async function handleSubmit(event) {
         imgElement.setAttribute('src', imgURL);
         imgElement.setAttribute('alt', destination);
     }
-    fragment.appendChild(imgElement);
+    cardFragment.appendChild(imgElement);
 
+    // text
+    const textFragment = document.createDocumentFragment();
     // destination
     const resGeo = await fetch('/geo', {
         method: 'POST',
@@ -52,7 +54,7 @@ async function handleSubmit(event) {
     tripData.geoData = geoData;
     const geoElement = document.createElement('p');
     geoElement.innerText = `Trip to ${destination}, ${geoData.countryName}`;
-    fragment.appendChild(geoElement);
+    textFragment.appendChild(geoElement);
 
     // start Date Time
     const options = {
@@ -65,12 +67,12 @@ async function handleSubmit(event) {
     };
     const startDateElement = document.createElement('p');
     startDateElement.innerText = `Departing: ${startDateTime.toLocaleString('en-US', options)}`;
-    fragment.appendChild(startDateElement);
+    textFragment.appendChild(startDateElement);
 
     // count down
     const diffDaysElement = document.createElement('p');
     diffDaysElement.innerText = `${destination}, ${geoData.countryName} is ${diffDays.toString()} day(s) away`;
-    fragment.appendChild(diffDaysElement);
+    textFragment.appendChild(diffDaysElement);
 
     // get weather
     const weatherElement = document.createElement('p');
@@ -89,17 +91,21 @@ async function handleSubmit(event) {
         tripData.weatherData = weatherData;
         weatherElement.innerHTML = `<p>Weather of the day: ${weatherData.description}<\p><p>Temperature - High: ${weatherData.high}<span>&#8451;</span> Low: ${weatherData.low}<span>&#8451;</span></p>`;
     }
-    fragment.appendChild(weatherElement);
+    textFragment.appendChild(weatherElement);
 
     // store the data
     listTripData.push(tripData);
 
     // edit dom
+    const textContent = document.createElement('div');
+    textContent.classList.add('text-content');
+    textContent.appendChild(textFragment);
+    cardFragment.appendChild(textContent);
     const card = document.createElement('div');
-    card.appendChild(fragment);
+    card.classList.add('card');
+    card.appendChild(cardFragment);
     const cardList = document.getElementById('card-list');
     cardList.appendChild(card);
-
 }
 
 export {handleSubmit}
