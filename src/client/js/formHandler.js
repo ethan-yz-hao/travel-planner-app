@@ -53,6 +53,7 @@ async function handleSubmit(event) {
     const geoData = await resGeo.json();
     tripData.geoData = geoData;
     const geoElement = document.createElement('p');
+    geoElement.classList.add('destination');
     geoElement.innerText = `Trip to ${destination}, ${geoData.countryName}`;
     textFragment.appendChild(geoElement);
 
@@ -66,18 +67,20 @@ async function handleSubmit(event) {
         hour12: true
     };
     const startDateElement = document.createElement('p');
+    startDateElement.classList.add('departure');
     startDateElement.innerText = `Departing: ${startDateTime.toLocaleString('en-US', options)}`;
     textFragment.appendChild(startDateElement);
 
     // count down
     const diffDaysElement = document.createElement('p');
+    diffDaysElement.classList.add('countdown');
     diffDaysElement.innerText = `${destination}, ${geoData.countryName} is ${diffDays.toString()} day(s) away`;
     textFragment.appendChild(diffDaysElement);
 
     // get weather
     const weatherElement = document.createElement('p');
     if (diffDays > 16) {
-        weatherElement.innerHTML = '<p>Weather of the day: No accurate weather data available<\p>';
+        weatherElement.innerHTML = '<p class="weather">Weather of the day: No accurate weather data available<\p>';
     } else {
         const resWeather = await fetch('/weather', {
             method: 'POST',
@@ -89,7 +92,7 @@ async function handleSubmit(event) {
         });
         const weatherData = await resWeather.json();
         tripData.weatherData = weatherData;
-        weatherElement.innerHTML = `<p>Weather of the day: ${weatherData.description}<\p><p>Temperature - High: ${weatherData.high}<span>&#8451;</span> Low: ${weatherData.low}<span>&#8451;</span></p>`;
+        weatherElement.innerHTML = `<p class="weather">Weather of the day: ${weatherData.description}<\p><p class="temperature">Temperature - High: ${weatherData.high}<span>&#8451;</span> Low: ${weatherData.low}<span>&#8451;</span></p>`;
     }
     textFragment.appendChild(weatherElement);
 

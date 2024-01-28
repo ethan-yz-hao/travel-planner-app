@@ -1,7 +1,9 @@
+@import "variables";
+
 .card {
-  background: #fff;
+  background: $color-background;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 5px $color-box-shadow;
   display: flex;
   flex-direction: row;
   margin: 20px;
@@ -9,16 +11,52 @@
   overflow: hidden;
 
   img {
-    max-width: 150px;
+    max-width: 350px;
     margin-right: 20px;
     border-radius: 3px;
   }
 
-  p {
-    margin: 0 0 10px;
-    line-height: 1.5;
-    &:last-child {
-      margin-bottom: 0;
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    p {
+      line-height: 1.4;
+    }
+
+    .destination {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: $color-text;
+      margin-bottom: 5px;
+    }
+
+    .departure {
+      font-size: 1em;
+      font-weight: normal;
+      color: lighten($color-text, 15%);
+      margin-bottom: 5px;
+    }
+
+    .countdown {
+      font-size: 0.9em;
+      font-weight: normal;
+      color: lighten($color-text, 15%);
+      margin-bottom: 5px;
+    }
+
+    .weather {
+      font-size: 0.9em;
+      font-weight: bold;
+      color: lighten($color-primary, 15%);
+      margin-bottom: 2px;
+    }
+
+    .temperature {
+      font-size: 0.85em;
+      font-weight: normal;
+      color: lighten($color-text, 35%);
     }
   }
 
