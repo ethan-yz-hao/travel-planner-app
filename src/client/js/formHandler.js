@@ -1,36 +1,19 @@
-import { listTripData } from './globalVars.js';
+import {listTripData} from './globalVars.js';
 
-function handleSubmit(event) {
+async function handleSubmit(event) {
     event.preventDefault()
 
     // get data from dom
-    // destination
     let destination = document.getElementById('destination').value;
-    // start Date Time
     const startDateTime = new Date(document.getElementById('start').value);
 
-    // post destination and get weather
+    // create tripData for later storage
+    const tripData = {destination, startDateTime};
+
     // calculate count down
     const nowUTC = new Date();
     const diffTime = Math.abs(startDateTime.getTime() - nowUTC.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    fetch('/weather', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({destination, diffDays}),
-    })
-        .then(res => res.json())
-        .then(
-            response => console.log(response)
-        );
-
-    // store the data
-    const tripData = {destination, startDateTime};
-    listTripData.push(tripData);
 
     // edit dom
     const fragment = document.createDocumentFragment();
@@ -54,6 +37,33 @@ function handleSubmit(event) {
     const diffDaysElement = document.createElement('p');
     diffDaysElement.innerText = diffDays.toString();
     fragment.appendChild(diffDaysElement);
+
+    // get geo and weather
+    const weatherElement = document.createElement('p');
+    if (diffDays > 16) {
+        weatherElement.innerText = 'No accurate weather data available';
+        fragment.appendChild(weatherElement);
+    } else {
+        await fetch('/weather', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({destination, diffDays}),
+        })
+            .then(res => res.json())
+            .then(response => {
+                console.log(response);
+                tripData.weatherData = response.weatherData;
+                tripData.geoData = response.geoData;
+                weatherElement.innerText = `Weather: ${response.weatherData}`;
+                fragment.appendChild(weatherElement);
+            });
+    }
+
+    // store the data
+    listTripData.push(tripData);
 
     const card = document.createElement('div');
     card.appendChild(fragment);
