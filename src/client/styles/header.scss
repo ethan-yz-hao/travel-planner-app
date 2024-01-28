@@ -1,20 +1,23 @@
+@import "variables";
+
 header {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-    background-color: #333;
-    color: #fff;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    background-color: lighten($color-primary, 35%);
+    color: $color-text;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
 }
 
-.icon img, #spacer{
+.icon img, #spacer {
     width: 30px;
 }
 
 .title {
+    font-size: 1.5em;
     text-align: center;
 }

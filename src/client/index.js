@@ -1,4 +1,3 @@
-import { isURL } from './js/checkForURL';
 import { handleSubmit } from './js/formHandler';
 import { initializeHTML } from './js/initHTML.js';
 
@@ -13,6 +12,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 export {
-    isURL,
     handleSubmit
 }

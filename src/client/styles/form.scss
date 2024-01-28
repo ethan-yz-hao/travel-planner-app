@@ -1,26 +1,36 @@
+@import 'variables';
+
 form {
-    border: 1px solid #ddd;
-    border-radius: 3px;
+    border: 1px solid $color-border;
+    border-radius: 5px;
     padding: 20px;
-    background-color: #fff;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    background-color: $color-background;
+    box-shadow: 0px 0px 5px $color-box-shadow;
     label {
         display: block;
         margin-bottom: 10px;
         font-weight: bold;
+        font-size: 1.1em;
     }
-    input[type="text"] {
+    input[type="text"],
+    input[type="datetime-local"]{
         padding: 10px;
+        margin-bottom: 15px;
         width: 100%;
-        border: 1px solid #ccc;
+        border: 1px solid $color-border;
         border-radius: 3px;
     }
     input[type="submit"] {
-        background-color: #333;
-        color: #fff;
+        background-color: $color-primary;
+        color: $color-background;
         border: none;
         padding: 10px 20px;
         cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: darken($color-primary, 10%);
+        }
     }
 }
 
@@ -29,37 +39,6 @@ input {
     width: 100%;
     line-height: 16px;
     margin: 10px 0;
-}
-
-.submit-button {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-        background-color: #555;
-    }
-}
-
-.result-container {
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
+    border: 1px solid $color-border;
     border-radius: 3px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-
-    strong {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-
-    div {
-        padding: 5px;
-    }
 }

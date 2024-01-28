@@ -1,8 +1,11 @@
+@import 'variables';
+
 footer {
   text-align: center;
-  background-color: #333;
-  color: #fff;
+  background-color: $color-footer-background;
+  color: $color-background;
   padding: 10px 0;
+
   p {
     margin: 0;
   }

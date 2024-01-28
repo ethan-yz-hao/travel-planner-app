@@ -1,9 +1,12 @@
+@import 'variables';
+
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #f8f8f8;
-    font-family: Arial, sans-serif;
+    background-color: $color-neutral;
+    font-family: 'Open Sans', sans-serif;
+    color: $color-text;
 }
 
 main {
@@ -20,5 +23,5 @@ section {
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px $color-box-shadow;
 }
