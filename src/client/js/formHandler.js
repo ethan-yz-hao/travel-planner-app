@@ -20,8 +20,26 @@ async function handleSubmit(event) {
     // init dom element
     const fragment = document.createDocumentFragment();
 
+    // image
+    const resImg = await fetch('/img', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({destination}),
+    });
+    const imgData = await resImg.json();
+    const imgURL = imgData.imgURL;
+    tripData.imgURL = imgURL;
+    const imgElement = document.createElement('img');
+    if (imgURL !== null) {
+        imgElement.setAttribute('src', imgURL);
+        imgElement.setAttribute('alt', destination);
+    }
+    fragment.appendChild(imgElement);
+
     // destination
-    // get geo
     const resGeo = await fetch('/geo', {
         method: 'POST',
         credentials: 'same-origin',
@@ -57,8 +75,7 @@ async function handleSubmit(event) {
     // get weather
     const weatherElement = document.createElement('p');
     if (diffDays > 16) {
-        weatherElement.innerHTML = '<p>Weather of the day: No accurate weather data available}<\p>';
-        fragment.appendChild(weatherElement);
+        weatherElement.innerHTML = '<p>Weather of the day: No accurate weather data available<\p>';
     } else {
         const resWeather = await fetch('/weather', {
             method: 'POST',
@@ -71,8 +88,8 @@ async function handleSubmit(event) {
         const weatherData = await resWeather.json();
         tripData.weatherData = weatherData;
         weatherElement.innerHTML = `<p>Weather of the day: ${weatherData.description}<\p><p>Temperature - High: ${weatherData.high}<span>&#8451;</span> Low: ${weatherData.low}<span>&#8451;</span></p>`;
-        fragment.appendChild(weatherElement);
     }
+    fragment.appendChild(weatherElement);
 
     // store the data
     listTripData.push(tripData);

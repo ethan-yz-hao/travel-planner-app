@@ -2,6 +2,7 @@ var path = require('path');
 const express = require('express');
 const postGeonames = require('./postGeonames.js');
 const postWeatherBit = require('./postWeatherBit');
+const postPixabay = require('./postPixabay.js');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -36,6 +37,14 @@ app.post('/geo', (req, res) => {
 
 app.post('/weather', (req, res) => {
     postWeatherBit(process.env.API_KEY_WEATHERBIT, req.body.lng, req.body.lat, req.body.diffDays)
+        .then(response => res.send(response))
+        .catch(error => {
+            console.error(error);
+        });
+});
+
+app.post('/img', (req, res) => {
+    postPixabay(process.env.API_KEY_PIXABAY, req.body.destination)
         .then(response => res.send(response))
         .catch(error => {
             console.error(error);
