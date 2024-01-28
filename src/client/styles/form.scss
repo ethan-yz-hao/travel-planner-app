@@ -58,6 +58,13 @@ input {
     transform: translateY(-120%);
     opacity: 0;
     visibility: hidden;
+    }
+
+.dropdown-form-inactive {
+    display: block;
+    transform: translateY(-120%);
+    opacity: 0;
+    visibility: hidden;
     transition: transform 0.5s ease, opacity 0.5s ease, visibility 0.5s;
 }
 
@@ -65,6 +72,7 @@ input {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
+    transition: transform 0.5s ease, opacity 0.5s ease, visibility 0.5s;
 }
 
 #trip-form-container {

@@ -10,6 +10,10 @@ function initializeHTML() {
     const formContainer = document.getElementById('trip-form-container');
 
     addButton.addEventListener('click', function() {
+        if (formContainer.classList.contains('dropdown-form')) {
+            formContainer.classList.remove('dropdown-form');
+            formContainer.classList.add('dropdown-form-inactive');
+        }
         formContainer.classList.toggle('dropdown-form-active');
     });
 
