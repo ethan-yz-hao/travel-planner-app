@@ -1,3 +1,5 @@
+import {listTripData} from './globalVars.js';
+
 function initializeHTML() {
     const startDateTimeElement = document.getElementById('start')
     const nowUTC = new Date();
