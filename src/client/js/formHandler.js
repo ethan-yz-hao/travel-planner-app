@@ -21,13 +21,25 @@ async function handleSubmit(event) {
     const cardFragment = document.createDocumentFragment();
 
     // image
-    const resImg = await fetch('/img', {
+    // get country
+    const resGeo = await fetch('/geo', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({destination}),
+    });
+    const geoData = await resGeo.json();
+    tripData.geoData = geoData;
+    // get image
+    const resImg = await fetch('/img', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({destination,  countryName: geoData.countryName}),
     });
     const imgData = await resImg.json();
     const imgURL = imgData.imgURL;
@@ -42,16 +54,6 @@ async function handleSubmit(event) {
     // text
     const textFragment = document.createDocumentFragment();
     // destination
-    const resGeo = await fetch('/geo', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({destination}),
-    });
-    const geoData = await resGeo.json();
-    tripData.geoData = geoData;
     const geoElement = document.createElement('p');
     geoElement.classList.add('destination');
     geoElement.innerText = `Trip to ${destination}, ${geoData.countryName}`;

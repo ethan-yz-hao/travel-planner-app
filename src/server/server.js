@@ -44,7 +44,7 @@ app.post('/weather', (req, res) => {
 });
 
 app.post('/img', (req, res) => {
-    postPixabay(process.env.API_KEY_PIXABAY, req.body.destination)
+    postPixabay(process.env.API_KEY_PIXABAY, req.body.destination, req.body.countryName)
         .then(response => res.send(response))
         .catch(error => {
             console.error(error);
