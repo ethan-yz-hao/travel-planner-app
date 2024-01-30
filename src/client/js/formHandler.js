@@ -1,4 +1,4 @@
-import {listTripData} from './globalVars.js';
+import {TripDataMap} from './globalVars.js';
 
 async function handleSubmit(event) {
     event.preventDefault()
@@ -59,7 +59,8 @@ async function handleSubmit(event) {
     }
 
     // store the data
-    listTripData.push(tripData);
+    const cardID = TripDataMap.size.toString();
+    TripDataMap.set(cardID, tripData);
 
     // edit dom
     // init dom element
@@ -108,13 +109,14 @@ async function handleSubmit(event) {
     // card
     const card = document.createElement('div');
     card.classList.add('card');
-    card.id = (listTripData.length - 1).toString();
+    card.id = cardID;
     card.appendChild(cardFragment);
     // card list
     const cardList = document.getElementById('card-list');
     cardList.appendChild(card);
 
-    console.log(listTripData);
+    // local storage
+    localStorage.setItem('TripDataMap', JSON.stringify(Array.from(TripDataMap.entries())));
 }
 
 export {handleSubmit}

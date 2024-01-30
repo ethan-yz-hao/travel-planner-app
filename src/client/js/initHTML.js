@@ -1,4 +1,4 @@
-import {listTripData} from './globalVars.js';
+import { TripDataMap, setTripDataMap } from './globalVars.js';
 
 function initializeHTML() {
     const startDateTimeElement = document.getElementById('start')
@@ -18,6 +18,18 @@ function initializeHTML() {
         }
         formContainer.classList.toggle('dropdown-form-active');
     });
+
+    // init cards with local storage
+    if (localStorage.getItem('TripDataMap')) {
+        setTripDataMap(new Map(JSON.parse(localStorage.getItem('TripDataMap'))));
+    } else {
+        setTripDataMap(new Map());
+    }
+    console.log(TripDataMap);
+
+    for (let [cardID, TripData] of TripDataMap) {
+        console.log(cardID + " is " + TripData.destination);
+    }
 
     // if ('serviceWorker' in navigator) {
     //     window.addEventListener('load', () => {
