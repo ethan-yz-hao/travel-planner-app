@@ -9,8 +9,8 @@ import './styles/footer.scss';
 import './styles/form.scss';
 import './styles/card.scss';
 
-document.addEventListener('DOMContentLoaded', () => {
-    initializeHTML();
+document.addEventListener('DOMContentLoaded', async () => {
+    await initializeHTML();
 });
 
 export {

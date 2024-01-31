@@ -1,6 +1,7 @@
 import { TripDataMap, setTripDataMap } from './globalVars.js';
+import {createCard} from "./createCard.js";
 
-function initializeHTML() {
+async function initializeHTML() {
     const startDateTimeElement = document.getElementById('start')
     const nowUTC = new Date();
     const timeZoneOffset = nowUTC.getTimezoneOffset() * 60000;
@@ -25,10 +26,8 @@ function initializeHTML() {
     } else {
         setTripDataMap(new Map());
     }
-    console.log(TripDataMap);
-
-    for (let [cardID, TripData] of TripDataMap) {
-        console.log(cardID + " is " + TripData.destination);
+    for (let [cardID, tripData] of TripDataMap) {
+        await createCard(cardID, tripData);
     }
 
     // if ('serviceWorker' in navigator) {
