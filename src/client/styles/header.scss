@@ -36,8 +36,5 @@ header {
             background-color: darken($color-primary, 10%);
         }
 
-        &.active {
-            background-color: darken($color-primary, 20%);
-        }
     }
 }
