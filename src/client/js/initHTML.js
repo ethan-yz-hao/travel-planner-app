@@ -9,10 +9,10 @@ async function initializeHTML() {
     startDateTimeElement.value = localISOTime;
     startDateTimeElement.setAttribute('min', localISOTime);
 
-    const addButton = document.getElementById('add-trip-button');
+    const addTripButton = document.getElementById('add-trip-button');
     const formContainer = document.getElementById('trip-form-container');
 
-    addButton.addEventListener('click', function() {
+    addTripButton.addEventListener('click', function() {
         if (formContainer.classList.contains('dropdown-form')) {
             formContainer.classList.remove('dropdown-form');
             formContainer.classList.add('dropdown-form-inactive');
@@ -29,6 +29,22 @@ async function initializeHTML() {
     for (let [cardID, tripData] of TripDataMap) {
         await createCard(cardID, tripData);
     }
+
+    // remove button event
+    document.getElementById('card-list').addEventListener('click', function(event) {
+        if(event.target.tagName === 'BUTTON') {
+            const buttonID = event.target.getAttribute('button-id');
+            const cardElement = document.querySelector(`.card[card-id="${buttonID}"]`);
+            if (cardElement) {
+                cardElement.remove();
+            }
+            if (TripDataMap.has(buttonID)) {
+                TripDataMap.delete(buttonID);
+                localStorage.setItem('TripDataMap', JSON.stringify(Array.from(TripDataMap.entries())));
+            }
+
+        }
+    });
 
     // if ('serviceWorker' in navigator) {
     //     window.addEventListener('load', () => {

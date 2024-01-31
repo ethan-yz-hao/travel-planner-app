@@ -60,6 +60,12 @@ async function createCard(cardID, tripData) {
     const weatherElement = document.createElement('p');
     weatherElement.innerHTML = weatherText;
     textFragment.appendChild(weatherElement);
+    // remove button
+    const removeButtonElement = document.createElement('button');
+    removeButtonElement.innerText = 'Remove';
+    removeButtonElement.classList.add('remove-button');
+    removeButtonElement.setAttribute('button-id', cardID);
+    textFragment.appendChild(removeButtonElement);
 
     // integrate
     const textContent = document.createElement('div');
@@ -69,7 +75,7 @@ async function createCard(cardID, tripData) {
     // card
     const card = document.createElement('div');
     card.classList.add('card');
-    card.id = cardID;
+    card.setAttribute('card-id', cardID);
     card.appendChild(cardFragment);
     // card list
     const cardList = document.getElementById('card-list');
