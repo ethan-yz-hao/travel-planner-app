@@ -35,5 +35,13 @@
     <p>&copy; 2024 Travel Planner. All rights reserved.</p>
 </footer>
 
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js');
+        });
+    }
+</script>
+
 </body>
 </html>

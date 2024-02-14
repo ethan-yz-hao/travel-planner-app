@@ -1,55 +1,58 @@
-import {handleSubmit} from '../src/client/js/formHandler';
+import { handleSubmit } from '../src/client/js/formHandler';
+import { createCard } from '../src/client/js/createCard';
 
-jest.mock('../src/client/js/checkForURL', () => {
-    return {
-        isURL: jest.fn(() => true),
-    };
+// Mocking the DOM elements and their values
+document.body.innerHTML = `
+  <form id="tripForm">
+    <input type="text" id="destination" value="Test Destination">
+    <input type="text" id="start" value="2024-02-13T00:00:00">
+    <button type="submit" id="submitBtn">Submit</button>
+  </form>
+`;
+
+// Mocking fetch responses
+global.fetch = jest.fn((url) => {
+    if (url === '/geo') {
+        return Promise.resolve({
+            json: () => Promise.resolve({ countryName: 'Test Country' })
+        });
+    } else if (url === '/img') {
+        return Promise.resolve({
+            json: () => Promise.resolve({ imgURL: 'http://test.com/test.jpg' })
+        });
+    }
 });
 
-describe('handleSubmit function', () => {
-    beforeEach(() => {
-        document.body.innerHTML = `
-            <form>
-                <input id="url" value="https://example.com" />
-            </form>
-            <div id="polarity"></div>
-            <div id="subjectivity"></div>
-            <div id="snippet"></div>
-        `;
-    });
+// Mocking localStorage
+Storage.prototype.setItem = jest.fn();
 
-    test('should prevent default form submission and fetch data', async () => {
+// Mocking createCard function
+jest.mock('../src/client/js/createCard', () => ({
+    createCard: jest.fn()
+}));
+
+describe('handleSubmit function', () => {
+    test('it should handle form submission', async () => {
+        // Mock event object
         const event = {
-            preventDefault: jest.fn(),
+            preventDefault: jest.fn()
         };
 
-        global.fetch = jest.fn(() =>
-            Promise.resolve({
-                json: () =>
-                    Promise.resolve({
-                        polarity: 'positive',
-                        subjectivity: 'neutral',
-                        snippet: 'This is a snippet.',
-                    }),
-            })
-        );
-
+        // Call the handleSubmit function
         await handleSubmit(event);
 
-        expect(event.preventDefault).toHaveBeenCalled();
-        expect(fetch).toHaveBeenCalledWith('/eval', {
-            method: 'POST',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({urlText: 'https://example.com'}),
-        });
-
-        await new Promise(resolve => setTimeout(resolve, 0));
-
-        expect(document.getElementById('polarity').innerText).toBe('positive');
-        expect(document.getElementById('subjectivity').innerText).toBe('neutral');
-        expect(document.getElementById('snippet').innerText).toBe('This is a snippet.');
+        // Assertions
+        expect(event.preventDefault).toHaveBeenCalledTimes(1);
+        expect(fetch).toHaveBeenCalledTimes(2); // Two fetch calls
+        expect(fetch).toHaveBeenCalledWith('/geo', expect.any(Object));
+        expect(fetch).toHaveBeenCalledWith('/img', expect.any(Object));
+        expect(Storage.prototype.setItem).toHaveBeenCalledWith(
+            'TripDataMap',
+            expect.any(String)
+        );
+        expect(createCard).toHaveBeenCalledWith(
+            '0',
+            expect.any(Object)
+        );
     });
 });
